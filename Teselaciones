@@ -1,0 +1,65 @@
+color col;
+ArrayList <Figura> figuras;
+float lado=4;
+float altura = sqrt(sq(lado) - sq(lado/2f));
+float apotema = lado/ 2*tan(PI/6f);
+float radio = altura - apotema;
+float delta = 0;
+int k=0;
+color var;
+int a,b,t;
+
+color [] co = new color[13904];
+
+PImage img;
+void setup(){
+  size(720,538,P3D);
+  figuras = new ArrayList<Figura>();
+for (float j = radio; j<=height; j+= altura){
+   int paso = (round((j - radio)/altura));
+    float offset =0;
+    if (paso%2 == 0){
+      offset = lado/2f;
+    }
+    for (float i =-offset; i<=width; i+= lado){
+      figuras.add(new Triangulo(i,j,lado,0,col));
+      
+    }
+    for (float i =lado/2f-offset; i<=width; i+= lado){
+      figuras.add(new Triangulo(i,j-apotema,lado,PI,col));
+      
+    }
+  }
+  img = loadImage("pn.jpg");
+  }
+
+void draw(){
+  image(img,0,0);
+    fill(255);
+    textAlign(CENTER);
+    textSize(28);
+    text("Manten presionada A ó S",width/2,25);
+  if (keyPressed){
+    if (key=='a'||key=='A'){
+      noStroke();
+      fill(0);
+      for (Figura f: figuras){
+        f.display();
+      }
+          
+     }
+     if (key=='s'||key=='S'){
+       for (Figura f: figuras){
+        f.display();
+      }
+      fill(255);
+        textSize(32);
+    text("Mueve tu mouse de izquierda a derecha",width/2,50);
+      noStroke();
+      var=mouseX*25;
+     
+     }
+  
+  }
+}
+
